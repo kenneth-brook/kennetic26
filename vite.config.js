@@ -1,13 +1,28 @@
 import { defineConfig } from 'vite'
-import nunjucks from 'vite-plugin-nunjucks'
+import path from 'path'
 
 export default defineConfig({
   root: './src',
-  plugins: [nunjucks()],
   build: {
-    outDir: '../dist',
+    outDir: '../dist/assets', // we only want assets here
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'src/assets/js/main.js')
+      },
+    },
   },
+  plugins: [
+    {
+      name: 'ignore-nunjucks',
+      load(id) {
+        if (id.endsWith('.njk')) {
+          // Tell Vite/Rollup to skip processing these
+          return ''
+        }
+      },
+    },
+  ],
   server: {
     open: '/pages/index.njk',
   },
