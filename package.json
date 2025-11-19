@@ -1,28 +1,21 @@
 {
-  "name": "kennetic-v1",
+  "name": "kennetic-site",
   "version": "1.0.0",
-  "description": "Kennetic Concepts v1.0 — Static site built with Vite + Nunjucks + GSAP",
+  "description": "Kennetic Concepts — Modern static site powered by Vite",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node render-templates.mjs",
-    "preview": "vite preview",
-    "clean": "rimraf dist"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "chokidar": "^3.6.0",
-    "fs-extra": "^11.3.2",
-    "nunjucks": "^3.2.4",
-    "rimraf": "^6.0.1",
-    "vite": "^7.2.2",
-    "vite-plugin-nunjucks": "^0.2.0"
+    "vite": "^7.2.2"
   },
   "dependencies": {
     "gsap": "^3.12.5"
   },
   "keywords": [
     "vite",
-    "nunjucks",
     "gsap",
     "static-site",
     "kennetic",
