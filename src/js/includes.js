@@ -5,11 +5,19 @@ export async function loadPartials() {
     ["footer", "/partials/footer.html"]
   ];
 
+  let loadedCount = 0;
+
   for (const [id, file] of partials) {
-    const el = document.getElementById(id);
-    if (el) {
+    const target = document.getElementById(id);
+    if (target) {
       const html = await fetch(file).then(r => r.text());
-      el.innerHTML = html;
+      target.innerHTML = html;
+      loadedCount++;
     }
+  }
+
+  // FIRE THIS EVENT WHEN DONE
+  if (loadedCount === partials.length) {
+    window.dispatchEvent(new Event("partialsLoaded"));
   }
 }
