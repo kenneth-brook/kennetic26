@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/img/kc_new.jpg" alt="Kennetic Concepts Logo" width="240">
+  <img src="public/img/kc_new.JPG" alt="Kennetic Concepts Logo" width="240">
 </p>
 
 # Kennetic Concepts — Modern Web Systems & Connected Experiences
