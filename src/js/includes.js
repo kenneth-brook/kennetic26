@@ -5,19 +5,32 @@ export async function loadPartials() {
     ["footer", "/partials/footer.html"]
   ];
 
-  let loadedCount = 0;
+  const results = await Promise.all(
+    partials.map(async ([id, file]) => {
+      const target = document.getElementById(id);
 
-  for (const [id, file] of partials) {
-    const target = document.getElementById(id);
-    if (target) {
-      const html = await fetch(file).then(r => r.text());
-      target.innerHTML = html;
-      loadedCount++;
-    }
-  }
+      if (!target) {
+        return { id, file, loaded: false, reason: "missing-target" };
+      }
 
-  // FIRE THIS EVENT WHEN DONE
-  if (loadedCount === partials.length) {
-    window.dispatchEvent(new Event("partialsLoaded"));
-  }
+      try {
+        const response = await fetch(file);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        target.innerHTML = await response.text();
+        return { id, file, loaded: true };
+      } catch (error) {
+        console.error(`Failed to load partial: ${file}`, error);
+        return { id, file, loaded: false, reason: "fetch-failed" };
+      }
+    })
+  );
+
+  window.dispatchEvent(
+    new CustomEvent("partialsLoaded", {
+      detail: { results }
+    })
+  );
 }
